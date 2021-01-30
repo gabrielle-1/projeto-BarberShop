@@ -13,7 +13,7 @@ public class Cliente extends Pessoa {
         this.cep = cep;
     }
 
-    public Cliente(String endereco, String cep, int id, String nome) {
+    public Cliente(int id, String nome, String endereco, String cep) {
         super(id, nome);
         this.endereco = endereco;
         this.cep = cep;
