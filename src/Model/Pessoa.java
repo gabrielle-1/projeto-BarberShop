@@ -4,7 +4,7 @@ package Model;
 import java.util.Date;
 
 
-public class Pessoa {
+abstract public class Pessoa {
     private int id;
     private String nome;
     private char sexo;
