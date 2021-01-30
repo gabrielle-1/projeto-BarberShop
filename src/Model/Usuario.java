@@ -7,7 +7,7 @@ public class Usuario extends Pessoa{
     private String senha;
     private String nivelAcesso;
 
-    public Usuario(String senha, String nivelAcesso, int id, String nome) {
+    public Usuario(int id, String nome, String senha, String nivelAcesso) {
         super(id, nome);
         this.senha = senha;
         this.nivelAcesso = nivelAcesso;
