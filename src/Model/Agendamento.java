@@ -1,4 +1,3 @@
-
 package Model;
 
 import java.text.ParseException;
@@ -7,14 +6,21 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ *
+ * @author Gabrielle Rodrigues
+ */
 public class Agendamento {
+    
     private int id;
     private Cliente cliente;
     private Servico servico;
     private float valor;
     private Date data;
     private String observacao; 
+    
 public Agendamento(int id, Cliente cliente, Servico servico, float valor, String data) {
+    
         this.id = id;
         this.cliente = cliente;
         this.servico = servico;
@@ -25,6 +31,11 @@ public Agendamento(int id, Cliente cliente, Servico servico, float valor, String
             Logger.getLogger(Agendamento.class.getName()).log(Level.SEVERE, null, ex);
         }
        
+    }
+
+    public Agendamento(int id, Cliente cliente, Servico servico, float valor, String data, String observacao) {
+        this(id, cliente, servico, valor, data);
+        this.observacao = observacao;
     }
 
     public int getId() {
@@ -67,6 +78,14 @@ public Agendamento(int id, Cliente cliente, Servico servico, float valor, String
         this.data = data;
     }
 
+    public String getDataFormatada(){
+        return new SimpleDateFormat("dd/MM/yyyy").format(data);
+    }
+    
+    public String getHoraFormatada(){
+        return new SimpleDateFormat("HH:mm").format(data);
+    }
+    
     public String getObservacao() {
         return observacao;
     }
@@ -74,7 +93,5 @@ public Agendamento(int id, Cliente cliente, Servico servico, float valor, String
     public void setObservacao(String observacao) {
         this.observacao = observacao;
     } 
-    
-        
     
 }

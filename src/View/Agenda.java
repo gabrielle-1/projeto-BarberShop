@@ -1,21 +1,24 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package View;
+
+import Controller.AgendaController;
+import javax.swing.JComboBox;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 /**
  *
- * @author Gabi
+ * @author Gabrielle Rodrigues
  */
 public class Agenda extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Agenda
-     */
+    private final AgendaController controller;
+
     public Agenda() {
         initComponents();
+        controller = new AgendaController(this);
+        iniciar();
+        
     }
 
     /**
@@ -44,11 +47,12 @@ public class Agenda extends javax.swing.JFrame {
         lblHora = new javax.swing.JLabel();
         btnAgendar = new javax.swing.JToggleButton();
         scrollTabela = new javax.swing.JScrollPane();
-        tabela1 = new javax.swing.JTable();
+        tableAgendamentos = new javax.swing.JTable();
+        lblObersavacao = new javax.swing.JLabel();
         lblFundoPainel = new javax.swing.JLabel();
         lblFundo = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtObservacao.setColumns(20);
@@ -107,11 +111,19 @@ public class Agenda extends javax.swing.JFrame {
         getContentPane().add(txtHora, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 570, 270, 40));
 
         comboBoxServico.setFont(new java.awt.Font("Consolas", 0, 14)); // NOI18N
-        comboBoxServico.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Barba", "Corte", "Corte + Barba" }));
+        comboBoxServico.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                comboBoxServicoItemStateChanged(evt);
+            }
+        });
+        comboBoxServico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboBoxServicoActionPerformed(evt);
+            }
+        });
         getContentPane().add(comboBoxServico, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 360, 270, 40));
 
         comboBoxCliente.setFont(new java.awt.Font("Consolas", 0, 14)); // NOI18N
-        comboBoxCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Gabrielle", "Lucas", "João", " " }));
         getContentPane().add(comboBoxCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 290, 270, 40));
 
         lblServico.setFont(new java.awt.Font("Consolas", 0, 14)); // NOI18N
@@ -145,21 +157,23 @@ public class Agenda extends javax.swing.JFrame {
         });
         getContentPane().add(btnAgendar, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 520, 280, -1));
 
-        tabela1.setFont(new java.awt.Font("Consolas", 0, 14)); // NOI18N
-        tabela1.setModel(new javax.swing.table.DefaultTableModel(
+        tableAgendamentos.setFont(new java.awt.Font("Consolas", 0, 14)); // NOI18N
+        tableAgendamentos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"1", "Alan", "Corte", "10", "21/01/2021", "08:00"},
-                {"2", "Gabrielle", "Corte", "10", "21/01/2021", "09:00"},
-                {"3", "Pedro", "Corte+ Barba", "30", "22/01/2021", "08:30"},
-                {"4", "Abigail", "Corte", "10", "22/01/2021", "09:30"}
+
             },
             new String [] {
-                "Id", "Cliente", "Serviço", "Valor", "Data", "Hora"
+                "Id", "Cliente", "Serviço", "Valor", "Data", "Hora", "Observação"
             }
         ));
-        scrollTabela.setViewportView(tabela1);
+        scrollTabela.setViewportView(tableAgendamentos);
 
         getContentPane().add(scrollTabela, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 650, 900, 280));
+
+        lblObersavacao.setFont(new java.awt.Font("Consolas", 0, 14)); // NOI18N
+        lblObersavacao.setForeground(new java.awt.Color(255, 255, 255));
+        lblObersavacao.setText("Observação");
+        getContentPane().add(lblObersavacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 230, -1, -1));
 
         lblFundoPainel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/imagens/Agenda-PainelFundo.png"))); // NOI18N
         getContentPane().add(lblFundoPainel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, -10, -1, -1));
@@ -187,8 +201,16 @@ public class Agenda extends javax.swing.JFrame {
     }//GEN-LAST:event_txtHoraActionPerformed
 
     private void btnAgendarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgendarActionPerformed
-        // TODO add your handling code here:
+        this.controller.agendar();
     }//GEN-LAST:event_btnAgendarActionPerformed
+
+    private void comboBoxServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxServicoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboBoxServicoActionPerformed
+
+    private void comboBoxServicoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboBoxServicoItemStateChanged
+        this.controller.atualizaValor();
+    }//GEN-LAST:event_comboBoxServicoItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -237,14 +259,91 @@ public class Agenda extends javax.swing.JFrame {
     private javax.swing.JLabel lblFundoPainel;
     private javax.swing.JLabel lblHora;
     private javax.swing.JLabel lblId;
+    private javax.swing.JLabel lblObersavacao;
     private javax.swing.JLabel lblServico;
     private javax.swing.JLabel lblValor;
     private javax.swing.JScrollPane scrollTabela;
-    private javax.swing.JTable tabela1;
+    private javax.swing.JTable tableAgendamentos;
     private javax.swing.JTextField txtData;
     private javax.swing.JTextField txtHora;
     private javax.swing.JTextField txtId;
     private javax.swing.JTextArea txtObservacao;
     private javax.swing.JTextField txtValor;
     // End of variables declaration//GEN-END:variables
+
+    private void iniciar() {
+        
+       this.controller.atualizaTabela();
+       this.controller.atualizaCliente();
+       this.controller.atualizaServico();
+       this.controller.atualizaValor();
+
+    }
+
+    public JTable getTableAgendamentos() {
+        return tableAgendamentos;
+    }
+
+    public void setTableAgendamentos(JTable jTableAgendamentos) {
+        this.tableAgendamentos = jTableAgendamentos;
+    }
+
+    public JComboBox<String> getComboBoxCliente() {
+        return comboBoxCliente;
+    }
+
+    public void setComboBoxCliente(JComboBox<String> comboBoxCliente) {
+        this.comboBoxCliente = comboBoxCliente;
+    }
+
+    public JComboBox<String> getComboBoxServico() {
+        return comboBoxServico;
+    }
+
+    public void setComboBoxServico(JComboBox<String> comboBoxServico) {
+        this.comboBoxServico = comboBoxServico;
+    }
+
+    public JTextField getTxtValor() {
+        return txtValor;
+    }
+
+    public void setTxtValor(JTextField txtValor) {
+        this.txtValor = txtValor;
+    }
+
+    public JTextField getTxtData() {
+        return txtData;
+    }
+
+    public void setTxtData(JTextField txtData) {
+        this.txtData = txtData;
+    }
+
+    public JTextField getTxtHora() {
+        return txtHora;
+    }
+
+    public void setTxtHora(JTextField txtHora) {
+        this.txtHora = txtHora;
+    }
+
+    public JTextField getTxtId() {
+        return txtId;
+    }
+
+    public void setTxtId(JTextField txtId) {
+        this.txtId = txtId;
+    }
+
+    public JTextArea getTxtObservacao() {
+        return txtObservacao;
+    }
+
+    public void setTxtObservacao(JTextArea txtObservacao) {
+        this.txtObservacao = txtObservacao;
+    }
+    
+    
+    
 }

@@ -1,4 +1,3 @@
-
 package Model;
 
 import java.text.ParseException;
@@ -7,8 +6,12 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
+/**
+ *
+ * @author Gabrielle Rodrigues
+ */
 abstract public class Pessoa {
+    
     private int id;
     private String nome;
     private char sexo;
@@ -18,11 +21,13 @@ abstract public class Pessoa {
     private String rg;
 
     public Pessoa(int id, String nome) {
+        
         this.id = id;
         this.nome = nome;
     }
 
     public Pessoa(int id, String nome, char sexo, String dataNascimento, String telefone, String email, String rg) {
+       
         this.id = id;
         this.nome = nome;
         this.sexo = sexo;
@@ -92,6 +97,4 @@ abstract public class Pessoa {
         this.rg = rg;
     }
     
-    
-
 }

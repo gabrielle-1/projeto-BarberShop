@@ -1,13 +1,17 @@
-
 package Model;
 
-
+/**
+ *
+ * @author Gabrielle Rodrigues
+ */
 public class Servico {
+    
     private int id;
     private String descricao;
     private float valor;
 
     public Servico(int id, String descricao, float valor) {
+        
         this.id = id;
         this.descricao = descricao;
         this.valor = valor;
@@ -37,5 +41,9 @@ public class Servico {
         this.valor = valor;
     }
     
+    @Override
+    public String toString(){
+        return getDescricao();
+    }
     
 }

@@ -1,21 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package View;
+
+import Controller.MenuPrincipalController;
 
 /**
  *
- * @author Gabi
+ * @author Gabrielle Rodrigues
  */
 public class MenuPrincipal extends javax.swing.JFrame {
 
-    /**
-     * Creates new form MenuPrincipal
-     */
+    private final MenuPrincipalController controller;
+    
     public MenuPrincipal() {
+        
         initComponents();
+        this.controller = new MenuPrincipalController(this);
     }
 
     /**
@@ -47,6 +45,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         menuAgenda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/imagens/icons/agenda32-icon.png"))); // NOI18N
         menuAgenda.setText("Agenda");
+        menuAgenda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuAgendaActionPerformed(evt);
+            }
+        });
         menuOperacao.add(menuAgenda);
 
         barraMenu.add(menuOperacao);
@@ -126,6 +129,10 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private void menuTrabalhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuTrabalhoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_menuTrabalhoActionPerformed
+
+    private void menuAgendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAgendaActionPerformed
+        this.controller.navegaParaAgenda();
+    }//GEN-LAST:event_menuAgendaActionPerformed
 
     /**
      * @param args the command line arguments
